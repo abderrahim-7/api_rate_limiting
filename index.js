@@ -1,6 +1,8 @@
 const express = require("express")
 const app = express();
 const path = require("path")
+const { connectRedis } = require("./redisClient")
+const { checkAccess } = require("./rateLimiting");
 
 const router = express.Router();
 
@@ -13,8 +15,14 @@ router.get("/",async (req,res) =>{
 
 router.get("/wisdom", async (req, res)=> {
     try{
-        const randomInt = Math.floor(Math.random() * 30);
-        res.status(200).json({message : data[randomInt]})
+        const ip = req.ip
+        if (await checkAccess(ip)){
+            const randomInt = Math.floor(Math.random() * 30);
+            res.status(200).json({message : data[randomInt], success : true})
+        }
+        else{
+            res.status(400).json({message : "Slow down!! Too many wisdom can kill you", success : false})
+        }
     }
     catch(err){
         res.status(400).json({message : err.message})
@@ -24,6 +32,7 @@ router.get("/wisdom", async (req, res)=> {
 app.use("/",router)
 
 app.listen(3000, () => {
+    connectRedis();
     console.log("Server is running at http://localhost:3000")
 })
 
