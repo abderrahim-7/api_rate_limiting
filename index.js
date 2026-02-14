@@ -17,7 +17,7 @@ router.get("/wisdom", async (req, res)=> {
     try{
         const ip = req.ip
         if (await checkAccess(ip)){
-            const randomInt = Math.floor(Math.random() * 30);
+            const randomInt = Math.floor(Math.random() * 100);
             res.status(200).json({message : data[randomInt], success : true})
         }
         else{
