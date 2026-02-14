@@ -68,8 +68,6 @@ const data = [
   "Common sense is like deodorant, those who need it the most never use it.",
   "Laughter is the best medicine, but if you’re laughing without reason, you might need medicine.",
   "Never be afraid to try something new… unless it’s skydiving without a parachute.",
-
-  // New sarcastic sayings
   "Work hard, nap harder.",
   "Follow your dreams… unless they involve responsibility.",
   "Honesty is the best policy… but insanity works too.",
